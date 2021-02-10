@@ -22,7 +22,15 @@ func intToBin(code []int64) []string {
 	var result []string
 
 	for i := 0; i < len(code); i++ {
-		result = append(result, strconv.FormatInt(code[i], 2)) // => 77 == '1001101'
+		bin := strconv.FormatInt(code[i], 2)
+		// ensure that our bin len == 8
+		for {
+			if len(bin) == 8 {
+				break
+			}
+			bin = "0" + bin
+		}
+		result = append(result, bin) // => 77 == '1001101'
 	}
 
 	return result
