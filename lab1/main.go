@@ -1,32 +1,42 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 )
 
 func main() {
-	var message string
-	fmt.Println("Enter message to hide:")
-	fmt.Scanln(&message)
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Println("Please enter text to hide:")
+	message, _ := reader.ReadString('\n')
 
+	// text to ASCII binCodes
+	encodedText := textToCode(message)
+	fmt.Println(encodedText)
+
+	// ASCII codes to binary
+	binCodes := intToBin(encodedText)
+	fmt.Println(binCodes)
+
+	// scan container
 	lines, err := scanLines("./container.txt")
 	if err != nil {
 		panic(err)
 	}
 
-	for _, line := range lines {
-		fmt.Println(line)
+	// hide message
+	res, err := hideMessage(binCodes, lines)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
 	}
+	fmt.Println(res)
 
-	// text to ASCII binCodes
-	encodedText := textToCode(message)
-	fmt.Println(encodedText)
-	// ASCII codes to binary
-	binCodes := intToBin(encodedText)
-	fmt.Println(binCodes)
 	// binary to ASCII codes
 	decCodes := binToInt(binCodes)
 	fmt.Println(decCodes)
+
 	// ASCII codes to text
 	decodedText := codeToText(decCodes)
 	fmt.Println(decodedText)
