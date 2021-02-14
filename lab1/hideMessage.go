@@ -2,6 +2,8 @@ package main
 
 import (
 	"errors"
+	"log"
+	"os"
 	"strings"
 )
 
@@ -30,13 +32,23 @@ func hideMessage(binCodes, containerText []string) (string, error) {
 	var word string
 	//  hide message into container by adding " " or "  " to a word
 	for i, w := range binCodesOneLine {
-		if string(w) == "1" {
+		if string(w) == "1" { // if w == "1" => add to word two spaces
 			word = wordsFromContainer[i] + one
-		} else {
+		} else { // if w == "0" => add to word one space
 			word = wordsFromContainer[i] + zero
 		}
 		result = result + word
 	}
 
 	return result, nil
+}
+
+func writeToFile(text string) {
+	file, err := os.Create("./hidden.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	file.WriteString(text + "\n")
 }
