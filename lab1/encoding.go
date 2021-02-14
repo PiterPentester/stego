@@ -9,7 +9,7 @@ func textToCode(text string) []int64 {
 	runes := []rune(text) // represent our text as runes
 
 	var result []int64
-
+	// translate char to ASCII code
 	for i := 0; i < len(runes); i++ {
 		result = append(result, int64(runes[i])) // int64('A') == 65
 	}
@@ -20,7 +20,7 @@ func textToCode(text string) []int64 {
 // convert our array of integers into binary array
 func intToBin(code []int64) []string {
 	var result []string
-
+	// translate integers of ASCII codes to binary
 	for i := 0; i < len(code); i++ {
 		bin := strconv.FormatInt(code[i], 2)
 		// ensure that our bin len == 8
