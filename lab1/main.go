@@ -4,13 +4,16 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
 	mode := bufio.NewReader(os.Stdin)
 	fmt.Println("Please chose mode. h = hide message, s = seek message:")
 	modeAnswer, _ := mode.ReadString('\n')
-	if modeAnswer == "h\n" {
+	modeAnswer = strings.TrimSpace(modeAnswer)
+
+	if modeAnswer == "h" {
 		reader := bufio.NewReader(os.Stdin)
 		fmt.Println("Please enter text to hide:")
 		message, _ := reader.ReadString('\n')
@@ -37,7 +40,7 @@ func main() {
 		}
 		writeToFile(res)
 
-	} else if modeAnswer == "s\n" {
+	} else if modeAnswer == "s" {
 		// scan hidden text
 		hidden, err := scanLines("./hidden.txt")
 		if err != nil {
